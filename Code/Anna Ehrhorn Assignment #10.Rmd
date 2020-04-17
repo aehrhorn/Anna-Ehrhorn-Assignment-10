@@ -45,12 +45,12 @@ tidy.JElem.data
 ***
 #### Question 2
 
-Summary Statistics for the Number of Tardies and Abseneces for each Room.
+Summary Statistics for the Number of Tardies and Abseneces for each Classroom.
 
 ```{r}
 summary.tard.abs <- tidy.JElem.data %>%
   group_by(Room) %>%
-  summarize(Tardies_mean = mean(Tardies),
+  summarise(Tardies_mean = mean(Tardies),
             Tardies_sd = sd(Tardies),
             Absences_mean = mean(Absences),
             Absences_sd = sd(Absences))
@@ -62,10 +62,14 @@ summary.tard.abs
 ***
 #### Question 3
 
+The frequency of missing data points for each quarter (Q1, Q2, Q3, Q4) by 
+Classroom. 
+
 ```{r}
-freq.NAdata <- tidy.JElem.data %>%
-  
-  
+missing.data <- tidy.JElem.data %>%
+  group_by(Room) %>%
+  replace(is.na(.), NA) %>%
+  summarise_at(funs(sum(Q1:Q4)))
 ```
 
 
