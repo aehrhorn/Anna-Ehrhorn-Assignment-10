@@ -23,7 +23,6 @@ johnson.elem.data <- read_csv(here("Data",
                               col_names = c("Room", "ID", "Tardies;Absences",
                                             "Q1", "Q2", "Q3", "Q4"))
                       
-
 johnson.elem.data
 ```
 
@@ -31,14 +30,14 @@ johnson.elem.data
 Further tidying of the *Johnson Elementary Project Data*.
 
 ```{r}
-convert.JElem.data <- johnson.elem.data %>% 
+tidy.JElem.data <- johnson.elem.data %>% 
   fill(Room) %>%
   drop_na(Room:Q4) %>%
   separate('Tardies;Absences', 
            into = c("Tardies", "Absences"), sep = " ; ",
            convert = TRUE, extra = "drop", fill = "right")
 
-convert.JElem.data
+tidy.JElem.data
 ```
 
 
@@ -46,10 +45,28 @@ convert.JElem.data
 ***
 #### Question 2
 
+Summary Statistics for the Number of Tardies and Abseneces for each Room.
+
+```{r}
+summary.tard.abs <- tidy.JElem.data %>%
+  group_by(Room) %>%
+  summarize(Tardies_mean = mean(Tardies),
+            Tardies_sd = sd(Tardies),
+            Absences_mean = mean(Absences),
+            Absences_sd = sd(Absences))
+
+summary.tard.abs
+```
 
 
 ***
 #### Question 3
+
+```{r}
+freq.NAdata <- tidy.JElem.data %>%
+  
+  
+```
 
 
 
