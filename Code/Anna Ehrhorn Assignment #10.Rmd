@@ -34,8 +34,8 @@ tidy.JElem.data <- johnson.elem.data %>%
   fill(Room) %>%
   drop_na(Room:Q4) %>%
   separate('Tardies;Absences', 
-           into = c("Tardies", "Absences"), sep = " ; ",
-           convert = TRUE, extra = "drop", fill = "right")
+           into = c("Tardies", "Absences"), sep = ";",
+           convert = TRUE)
 
 tidy.JElem.data
 ```
