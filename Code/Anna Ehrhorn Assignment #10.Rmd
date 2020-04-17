@@ -19,7 +19,10 @@ library(tidyverse)
 
 johnson.elem.data <- read_csv(here("Data", 
                                    "Johnson Elementary ELA Project.csv"), 
-                              skip = 3)
+                              skip = 4, 
+                              col_names = c("Room", "ID", "Tardies;Absences",
+                                            "Q1", "Q2", "Q3", "Q4"))
+                      
 
 johnson.elem.data
 ```
@@ -28,6 +31,17 @@ johnson.elem.data
 Further tidying of the *Johnson Elementary Project Data*.
 
 ```{r}
+johnson.elem.data %>% 
+  fill(Room)
+
+drop_na(johnson.elem.data) #how to make this work
+  
+johnson.elem.data
+
+johnson.elem.data %>%
+  separate(johnson.elem.data,'Tardies;Absences', 
+           into = c("Tardies", "Absences"),
+           convert = TRUE)
 
 ```
 
