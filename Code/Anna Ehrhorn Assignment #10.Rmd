@@ -31,18 +31,14 @@ johnson.elem.data
 Further tidying of the *Johnson Elementary Project Data*.
 
 ```{r}
-johnson.elem.data %>% 
-  fill(Room)
+convert.JElem.data <- johnson.elem.data %>% 
+  fill(Room) %>%
+  drop_na(Room:Q4) %>%
+  separate('Tardies;Absences', 
+           into = c("Tardies", "Absences"), sep = " ; ",
+           convert = TRUE, extra = "drop", fill = "right")
 
-drop_na(johnson.elem.data) #how to make this work
-  
-johnson.elem.data
-
-johnson.elem.data %>%
-  separate(johnson.elem.data,'Tardies;Absences', 
-           into = c("Tardies", "Absences"),
-           convert = TRUE)
-
+convert.JElem.data
 ```
 
 
