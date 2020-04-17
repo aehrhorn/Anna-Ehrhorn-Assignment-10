@@ -11,6 +11,26 @@ output: html_notebook
 ***
 #### Question 1
 
+Import and initial tidying of the *Johnson Elementary Project Data*.
+
+```{r}
+library(here)
+library(tidyverse)
+
+johnson.elem.data <- read_csv(here("Data", 
+                                   "Johnson Elementary ELA Project.csv"), 
+                              skip = 3)
+
+johnson.elem.data
+```
+
+
+Further tidying of the *Johnson Elementary Project Data*.
+
+```{r}
+
+```
+
 
 
 ***
