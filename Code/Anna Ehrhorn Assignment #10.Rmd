@@ -70,13 +70,22 @@ missing.data <- tidy.JElem.data %>%
   group_by(Room) %>%
   replace(is.na(.), NA) %>%
   summarise_at(funs(sum(Q1:Q4)))
-```
 
+missing.data
+```
 
 
 ***
 #### Question 4
 
+A graph that illustrates the median rating trends across the four quarters for
+the fifth-grade classes.
+
+```{r}
+median.ratings.boxplot <- tidy.JElem.data %>%
+  #make column of FOUR quarters together
+  ggplot(aes(x = Room, y = )
+```
 
 
 ***
