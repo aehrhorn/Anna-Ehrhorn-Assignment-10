@@ -88,9 +88,11 @@ the fifth-grade classes.
 
 ```{r}
 median.ratings.boxplot <- tidy.JElem.data %>%
-  add_column("ELA Year Median", median(Q1:Q4))
-
-ggplot(aes(x = Room, y = ELA Year Median))
+  group_by(Room) %>%
+  mutate(median_qscores = median(select(Q1:Q4))) %>% #Issue here
+  ggplot(mapping = aes(x = Room, y = median_qscores, color = Room)) +
+    labs(x = "Fifth Grade Classroom", y = "Median ELA Ratings", 
+         title = "Fifth Grade ELA Ratings across Four Quarters for each Classroom")
     
 ```
 
@@ -98,4 +100,16 @@ ggplot(aes(x = Room, y = ELA Year Median))
 ***
 #### Question 5
 
+Import and tidying of NYC Flight data.
+
+```{r}
+
+```
+
+
+A graph that compares flight carriers in terms of the proportion of 2013 flights that arrivved on time when traveling from New York City to Altanta.
+
+```{r}
+
+```
 
