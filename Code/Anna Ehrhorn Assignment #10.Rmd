@@ -58,7 +58,7 @@ Summary Statistics for the Number of Tardies and Abseneces for each Classroom.
 ```{r}
 summary.tard.abs <- tidy.JElem.data %>%
   group_by(Room) %>%
-  summarise(Tardies_mean = mean(Tardies),
+  summarize(Tardies_mean = mean(Tardies),
             Tardies_sd = sd(Tardies),
             Absences_mean = mean(Absences),
             Absences_sd = sd(Absences))
@@ -74,12 +74,9 @@ The frequency of missing data points for each quarter (Q1, Q2, Q3, Q4) by
 Classroom. 
 
 ```{r}
-missing.data <- tidy.JElem.data %>%
+tidy.JElem.data %>%
   group_by(Room) %>%
-  replace(is.na(.), NA) %>%
-  summarise_at(funs(sum(Q1:Q4)))
-
-missing.data
+  count(sum(is.na(Q1:Q4)))
 ```
 
 
@@ -91,8 +88,10 @@ the fifth-grade classes.
 
 ```{r}
 median.ratings.boxplot <- tidy.JElem.data %>%
-  add_column("ELA Year Median", median(sum(Q1:Q4))) %>%
-  ggplot(aes(x = Room, y = ELA Year Median)))
+  add_column("ELA Year Median", median(Q1:Q4))
+
+ggplot(aes(x = Room, y = ELA Year Median))
+    
 ```
 
 
