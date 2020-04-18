@@ -84,8 +84,8 @@ the fifth-grade classes.
 
 ```{r}
 median.ratings.boxplot <- tidy.JElem.data %>%
-  #make column of FOUR quarters together
-  ggplot(aes(x = Room, y = )
+  add_column("ELA Year Median", median(sum(Q1:Q4))) %>%
+  ggplot(aes(x = Room, y = ELA Year Median)))
 ```
 
 
