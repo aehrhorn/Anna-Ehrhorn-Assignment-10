@@ -21,7 +21,15 @@ johnson.elem.data <- read_csv(here("Data",
                                    "Johnson Elementary ELA Project.csv"), 
                               skip = 4, 
                               col_names = c("Room", "ID", "Tardies;Absences",
-                                            "Q1", "Q2", "Q3", "Q4"))
+                                            "Q1", "Q2", "Q3", "Q4"),
+                              col_types = cols(Room = col_factor(),
+                                               ID = col_double(),
+                                               'Tardies;Absences' = 
+                                                 col_character(),
+                                               Q1 = col_double(),
+                                               Q2 = col_double(),
+                                               Q3 = col_double(),
+                                               Q4 = col_double()))
                       
 johnson.elem.data
 ```
@@ -35,8 +43,7 @@ tidy.JElem.data <- johnson.elem.data %>%
   drop_na(Room:Q4) %>%
   separate('Tardies;Absences', 
            into = c("Tardies", "Absences"), sep = ";",
-           convert = TRUE) %>%
-  col_factor(Room)
+           convert = TRUE)
 
 tidy.JElem.data
 ```
