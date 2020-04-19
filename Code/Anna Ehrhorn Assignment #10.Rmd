@@ -40,7 +40,7 @@ Further tidying of the *Johnson Elementary Project Data*.
 ```{r}
 tidy.JElem.data <- johnson.elem.data %>% 
   fill(Room) %>%
-  drop_na(Room:Q4) %>%
+  drop_na(ID) %>%
   separate('Tardies;Absences', 
            into = c("Tardies", "Absences"), sep = ";",
            convert = TRUE) %>%
@@ -92,10 +92,13 @@ the fifth-grade classes.
 ```{r}
 median.ratings.boxplot <- tidy.JElem.data %>%
   group_by(Room) %>%
-  mutate(median_qscores = median(select(Q1:Q4))) %>% #Issue here
-  ggplot(mapping = aes(x = Room, y = median_qscores, color = Room)) +
+  mutate(median_qscores = median(Rating)) %>% 
+  ggplot(aes(x = Room, y = median_qscores)) +
+    geom_boxplot() +
     labs(x = "Fifth Grade Classroom", y = "Median ELA Ratings", 
          title = "Fifth Grade ELA Ratings across Four Quarters for each Classroom")
+
+median.ratings.boxplot
     
 ```
 
