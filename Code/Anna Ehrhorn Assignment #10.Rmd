@@ -91,12 +91,15 @@ the fifth-grade classes.
 
 ```{r}
 median.ratings.boxplot <- tidy.JElem.data %>%
-  group_by(Room) %>%
-  mutate(median_qscores = median(Rating)) %>% 
-  ggplot(aes(x = Room, y = median_qscores)) +
-    geom_boxplot() +
-    labs(x = "Fifth Grade Classroom", y = "Median ELA Ratings", 
-         title = "Fifth Grade ELA Ratings across Four Quarters for each Classroom")
+  group_by(Room, Quarter) %>%
+  summarize(median_qscores = median(Rating, na.rm = TRUE)) %>% 
+  ggplot(aes(x = Quarter, y = median_qscores, group = Room)) +
+    geom_line(aes(color = Room)) +
+    facet_wrap(vars(Room)) +
+  guides(color = "none") +
+    labs(x = "Quarter", y = "Median ELA Ratings", 
+         title = "Fifth Grade ELA Ratings", 
+         subtitle = "across Four Quarters for each Classroom")
 
 median.ratings.boxplot
     
@@ -120,9 +123,9 @@ flights.data
 tidy.flights.data <- flights.data %>% 
   separate(time_hour, 
            into = c("date", "hour"), sep = " ",
-           convert = TRUE) 
-  #parse_date(date) %>% #NOT WORKING
-  #parse_time(hour)  
+           convert = TRUE) #%>% 
+  #mutate(date = parse_date(date),
+         #hour = parse_time(hour))  
 
 tidy.flights.data
   
@@ -134,9 +137,22 @@ that arrived on time when traveling from New York City to Altanta.
 
 ```{r}
 tidy.flights.data %>%
-  filter(origin == "JFK", dest == "ATL") %>%
-  geom_col(data = tidy.flights.data, 
-           mapping = aes(x = carrier, y = arr_delay[arr_delay <= 0])) +
-    stat_prop()
+  mutate(on_time = (arr_delay <= 0)) %>%
+  filter(dest == "ATL", !is.na(on_time)) %>%
+  ggplot(aes(x = carrier)) +
+    geom_bar(aes(fill = on_time), position = "fill") +
+    labs(title = "On-Time Rates for Carriers from NYC to ATL",
+         subtitle = "Year 2013",
+         x = "Airline Carrier",
+         y = "Proportion") +
+    scale_fill_discrete(name = "Arrival Status",
+                      labels = c("Not on Time",
+                                 "On Time")) +
+    scale_x_discrete(labels = c("United Airlines", "Delta Air Lines",
+                              "ExpressJet Airlines", "Envoy Air", 
+                              "Southwest Airlines", "AirTran Airways", 
+                              "Endeavor Air")) +
+    coord_flip()
+
 ```
 
