@@ -104,17 +104,19 @@ Import and tidying of NYC Flight data.
 
 ```{r}
 
-flights.data <- read_csv(here("Data", 
-                                   "NYC Flights 2013.csv"))
+flights.data <- read_csv(here("Data", "NYC Flights 2013.csv"),
+                         col_types = cols(carrier = col_factor(),
+                                          origin = col_factor(),
+                                          dest = col_factor()))
 
 flights.data
 
 tidy.flights.data <- flights.data %>% 
   separate(time_hour, 
            into = c("date", "hour"), sep = " ",
-           convert = TRUE) %>%
-  parse_date(date) %>% #NOT WORKING
-  parse_time(hour)
+           convert = TRUE) 
+  #parse_date(date) %>% #NOT WORKING
+  #parse_time(hour)  
 
 tidy.flights.data
   
@@ -125,6 +127,10 @@ A graph that compares flight carriers in terms of the proportion of 2013 flights
 that arrived on time when traveling from New York City to Altanta.
 
 ```{r}
-
+tidy.flights.data %>%
+  filter(origin == "JFK", dest == "ATL") %>%
+  geom_col(data = tidy.flights.data, 
+           mapping = aes(x = carrier, y = arr_delay[arr_delay <= 0])) +
+    stat_prop()
 ```
 
