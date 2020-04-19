@@ -43,7 +43,8 @@ tidy.JElem.data <- johnson.elem.data %>%
   drop_na(Room:Q4) %>%
   separate('Tardies;Absences', 
            into = c("Tardies", "Absences"), sep = ";",
-           convert = TRUE)
+           convert = TRUE) %>%
+  gather(Q1:Q4, key = "Quarter", value = "Rating")
 
 tidy.JElem.data
 ```
@@ -74,9 +75,11 @@ The frequency of missing data points for each quarter (Q1, Q2, Q3, Q4) by
 Classroom. 
 
 ```{r}
-tidy.JElem.data %>%
-  group_by(Room) %>%
-  count(sum(is.na(Q1:Q4)))
+missing.JElem.class <- tidy.JElem.data %>%
+  group_by(Room, Quarter) %>%
+  summarize(sum(is.na(Rating)))
+
+missing.JElem.class
 ```
 
 
