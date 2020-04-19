@@ -1,8 +1,10 @@
 ---
-title: "EDRM 718 Assignment #10"
+title: 'EDRM 718 Assignment #10'
 author: "Anna Ehrhorn"
 date: "April 17, 2020"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 *This assignment will focus on importing and wrangling data.*
@@ -30,8 +32,6 @@ johnson.elem.data <- read_csv(here("Data",
                                                Q2 = col_double(),
                                                Q3 = col_double(),
                                                Q4 = col_double()))
-                      
-johnson.elem.data
 ```
 
 
@@ -45,8 +45,6 @@ tidy.JElem.data <- johnson.elem.data %>%
            into = c("Tardies", "Absences"), sep = ";",
            convert = TRUE) %>%
   gather(Q1:Q4, key = "Quarter", value = "Rating")
-
-tidy.JElem.data
 ```
 
 
@@ -102,7 +100,6 @@ median.ratings.boxplot <- tidy.JElem.data %>%
          subtitle = "across Four Quarters for each Classroom")
 
 median.ratings.boxplot
-    
 ```
 
 
@@ -126,9 +123,6 @@ tidy.flights.data <- flights.data %>%
            convert = TRUE) #%>% 
   #mutate(date = parse_date(date),
          #hour = parse_time(hour))  
-
-tidy.flights.data
-  
 ```
 
 
@@ -153,6 +147,5 @@ tidy.flights.data %>%
                               "Southwest Airlines", "AirTran Airways", 
                               "Endeavor Air")) +
     coord_flip()
-
 ```
 
